@@ -18,8 +18,9 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh '''
-               docker ps -q --filter "name=web" | xargs -r docker rm -f
-               docker run -d -p 8081:80 --name web web
+             docker rm -f web || true
+      docker run -d -p 8081:80 --name web web
+             
                 '''
             }
         }
