@@ -1,24 +1,28 @@
 pipeline {
-  any agent{
-     stages{
-       stage('checkout'){
-         step{
-              git https://github.com/Bhargava7032/task
-              }
+    agent any
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/Bhargava7032/task.git'
             }
-       stage('buil'){ 
-         step{
-           sh 'docker build -t web .'
-              }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'docker build -t web .'
             }
-       stage('deploy'){
-         step{
-            sh'''
-            docker rm -f web||true
-            docker run -d -p 8080:80 web
-            '''
-             }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh '''
+                  docker rm -f web || true
+                  docker run -d -p 8080:80 --name web web
+                '''
             }
-       }
-      }
-      }
+        }
+    }
+}
+
