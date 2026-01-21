@@ -1,0 +1,24 @@
+pipeline {
+  any agent{
+     stages{
+       stage('checkout'){
+         step{
+              git https://github.com/Bhargava7032/task
+              }
+            }
+       stage('buil'){ 
+         step{
+           sh 'docker build -t web .'
+              }
+            }
+       stage('deploy'){
+         step{
+            sh'''
+            docker rm -f web||true
+            docker run -d -p 8080:80 web
+            '''
+             }
+            }
+       }
+      }
+      }
